@@ -1,135 +1,138 @@
 const texts = {
-text1:"hai shonget",
-text2:"i made something for u :oo",
-text3:"..oh right, u hate me...(｡⁠ŏ⁠﹏⁠ŏ⁠)",
-text4:"proceed anyway? ^_^"
+    text1: "hai shonget",
+    text2: "i made something for u :oo",
+    text3: "..oh right, u hate me...(｡⁠ŏ⁠﹏⁠ŏ⁠)",
+    text4: "proceed anyway? ^_^"
 };
 
-function typeText(id,text,speed=55,cb){
-let el=document.getElementById(id);
-el.innerHTML="";
-let i=0;
+function typeText(id, text, speed = 55, cb) {
+    let el = document.getElementById(id);
+    el.innerHTML = "";
+    let i = 0;
 
-(function loop(){
-if(i<text.length){
-el.innerHTML+=text[i++];
-setTimeout(loop,speed);
-}else if(cb){
-cb();
-}
-})();
-}
-
-function nextPage(n){
-
-document.querySelectorAll(".page").forEach(p=>{
-p.classList.remove("active");
-});
-
-document.getElementById("page"+n).classList.add("active");
-
-if(n===2){
-typeText("text2",texts.text2);
+    (function loop() {
+        if (i < text.length) {
+            el.innerHTML += text[i++];
+            setTimeout(loop, speed);
+        } else if (cb) {
+            cb();
+        }
+    })();
 }
 
-if(n===3){
-typeText("text3",texts.text3);
+function nextPage(n) {
+
+    document.querySelectorAll(".page").forEach(p => {
+        p.classList.remove("active");
+    });
+
+    document.getElementById("page" + n).classList.add("active");
+
+    if (n === 2) {
+        typeText("text2", texts.text2);
+    }
+
+    if (n === 3) {
+        typeText("text3", texts.text3);
+    }
+
+    if (n === 4) {
+        typeText("text4", texts.text4);
+    }
+
+    if (n === 5) {
+        typeText(
+            "passwordText",
+            "to proceed, what silly nickname did u give me back then?"
+        );
+    }
+
+    if (n === 6) {
+
+        typeText("wishText", "make a wish ok..");
+
+        const overlay = document.getElementById("micOverlay");
+        overlay.classList.remove("show");
+
+        setTimeout(() => {
+            overlay.classList.add("show");
+        }, 1000);
+    }
 }
 
-if(n===4){
-typeText("text4",texts.text4);
-}
-
-if(n===5){
-typeText(
-"passwordText",
-"to proceed, what silly nickname did u give me back then?"
-);
-}
-
-if(n===6){
-
-typeText("wishText","make a wish ok..");
-
-const overlay=document.getElementById("micOverlay");
-overlay.classList.remove("show");
-
-setTimeout(()=>{
-overlay.classList.add("show");
-},1000);
-
-}
-}
-
-function goToPassword(){
-nextPage(5);
+function goToPassword() {
+    nextPage(5);
 }
 
 let noCount = 0;
 
 const noTexts = [
-"PLEASE?",
-"pretty please?",
-"PLEASEEEE",
-"come on :(",
-"just press ok",
-"PLEASEEEEEEE",
-"bro...",
-"😭"
+    "PLEASE?",
+    "pretty please?",
+    "PLEASEEEE",
+    "come on :(",
+    "just press ok",
+    "PLEASEEEEEEE",
+    "bro...",
+    "😭"
 ];
 
-function choiceNo(){
+function choiceNo() {
 
-const okBtn = document.getElementById("okBtn");
-const noBtn = document.getElementById("noBtn");
+    const okBtn = document.getElementById("okBtn");
+    const noBtn = document.getElementById("noBtn");
 
-noCount++;
+    noCount++;
 
-const okWidth = 120 + (noCount * 60);
+    const okWidth = 120 + (noCount * 60);
 
-okBtn.style.width = okWidth + "px";
-okBtn.style.height = (50 + noCount * 15) + "px";
-okBtn.style.fontSize = (16 + noCount * 2) + "px";
+    okBtn.style.width = okWidth + "px";
+    okBtn.style.height = (50 + noCount * 15) + "px";
+    okBtn.style.fontSize = (16 + noCount * 2) + "px";
 
-if(noCount <= noTexts.length){
-noBtn.innerText = noTexts[noCount - 1];
-}
+    if (noCount <= noTexts.length) {
+        noBtn.innerText = noTexts[noCount - 1];
+    }
 
-if(noCount >= 10){
+    if (noCount >= 10) {
 
-okBtn.style.position = "fixed";
-okBtn.style.top = "0";
-okBtn.style.left = "0";
-okBtn.style.width = "100vw";
-okBtn.style.height = "100vh";
-okBtn.style.borderRadius = "0";
-okBtn.style.fontSize = "4rem";
-okBtn.style.zIndex = "9999";
+        okBtn.style.position = "fixed";
+        okBtn.style.top = "0";
+        okBtn.style.left = "0";
+        okBtn.style.width = "100vw";
+        okBtn.style.height = "100vh";
+        okBtn.style.borderRadius = "0";
+        okBtn.style.fontSize = "4rem";
+        okBtn.style.zIndex = "9999";
 
-noBtn.style.display = "none";
-}
-
+        noBtn.style.display = "none";
+    }
 }
 
 /* PASSWORD */
-function checkPassword(){
 
-let v = document.getElementById("passwordInput").value.trim().toLowerCase();
+function checkPassword() {
 
-if(v === "kakaibabe"){
+    let v = document
+        .getElementById("passwordInput")
+        .value
+        .trim()
+        .toLowerCase();
 
-nextPage(6);
+    if (v === "kakaibabe") {
 
-}else{
+        nextPage(6);
 
-document.getElementById("passwordGif").src="angry.gif";
+    } else {
 
+        document.getElementById("passwordGif").src = "angry.gif";
+
+    }
 }
-}
 
-document.getElementById("passwordInput").addEventListener("input",()=>{
+document.getElementById("passwordInput").addEventListener("input", () => {
 
-document.getElementById("passwordGif").src="heh.gif";
+    document.getElementById("passwordGif").src = "heh.gif";
 
 });
 
@@ -140,203 +143,193 @@ let analyser;
 let dataArray;
 let micStream;
 
-let triggered=false;
-let stable=0;
+let triggered = false;
+let stable = 0;
 
-function enableMic(){
+function enableMic() {
 
-document.getElementById("micOverlay").classList.remove("show");
+    document.getElementById("micOverlay").classList.remove("show");
 
-navigator.mediaDevices.getUserMedia({audio:true})
+    navigator.mediaDevices.getUserMedia({ audio: true })
 
-.then(stream=>{
+        .then(stream => {
 
-micStream = stream;
+            micStream = stream;
 
-audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-audioCtx.resume();
+            audioCtx = new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
 
-const source = audioCtx.createMediaStreamSource(stream);
+            audioCtx.resume();
 
-analyser = audioCtx.createAnalyser();
+            const source = audioCtx.createMediaStreamSource(stream);
 
-analyser.fftSize = 512;
+            analyser = audioCtx.createAnalyser();
 
-source.connect(analyser);
+            analyser.fftSize = 512;
 
-dataArray = new Uint8Array(analyser.frequencyBinCount);
+            source.connect(analyser);
 
-detectBlow();
+            dataArray = new Uint8Array(
+                analyser.frequencyBinCount
+            );
 
-})
+            detectBlow();
 
-.catch(()=>{
+        })
 
-alert("microphone access denied 😔");
+        .catch(() => {
 
-});
+            alert("microphone access denied 😔");
 
+        });
 }
 
 /* HAPPY BIRTHDAY */
 
-function typeReplace(){
+function typeReplace() {
 
-let wish=document.getElementById("wishText");
-let birthday=document.getElementById("birthdayText");
+    let wish = document.getElementById("wishText");
+    let birthday = document.getElementById("birthdayText");
 
-wish.innerHTML="";
-wish.style.display="none";
+    wish.innerHTML = "";
+    wish.style.display = "none";
 
-birthday.innerHTML="";
-birthday.style.display="block";
+    birthday.innerHTML = "";
+    birthday.style.display = "block";
 
-setTimeout(()=>{
+    setTimeout(() => {
 
-typeText(
-"birthdayText",
-"hapi birthday shonget!!!1!11!:p"
-);
+        typeText(
+            "birthdayText",
+            "hapi birthday shonget!!!1!11!:p"
+        );
 
-},3400);
-
+    }, 3400);
 }
 
 /* LETTER BUTTON */
 
-function showLetterButton(){
+function showLetterButton() {
 
-let btn=document.getElementById("letterBtn");
+    let btn = document.getElementById("letterBtn");
 
-btn.style.display="block";
+    btn.style.display = "block";
 
-setTimeout(()=>{
-btn.style.opacity="1";
-},50);
-
+    setTimeout(() => {
+        btn.style.opacity = "1";
+    }, 50);
 }
 
 /* BLOW DETECTION */
 
-function detectBlow(){
+function detectBlow() {
 
-let gif=document.getElementById("candleGif");
-let video=document.getElementById("candleVideo");
+    let gif = document.getElementById("candleGif");
+    let video = document.getElementById("candleVideo");
 
-function loop(){
+    function loop() {
 
-if(triggered) return;
+        if (triggered) return;
 
-analyser.getByteFrequencyData(dataArray);
+        analyser.getByteFrequencyData(dataArray);
 
-let sum=0;
+        let sum = 0;
 
-for(let i=0;i<dataArray.length;i++){
-sum+=dataArray[i];
-}
+        for (let i = 0; i < dataArray.length; i++) {
+            sum += dataArray[i];
+        }
 
-let volume=sum/dataArray.length;
+        let volume = sum / dataArray.length;
 
-if(volume>25){
-stable++;
-}else{
-stable=0;
-}
+        if (volume > 25) {
+            stable++;
+        } else {
+            stable = 0;
+        }
 
-if(stable>8 && !triggered){
+        if (stable > 8 && !triggered) {
 
-triggered=true;
+            triggered = true;
 
-gif.style.display="none";
+            gif.style.display = "none";
 
-video.style.display="block";
+            video.style.display = "block";
 
-video.onplay=()=>{
+            video.onplay = () => {
 
-typeReplace();
+                typeReplace();
 
-setTimeout(()=>{
+                setTimeout(() => {
 
-showLetterButton();
+                    showLetterButton();
 
-},7000);
+                }, 7000);
+            };
 
-};
+            video.play().catch(() => {});
 
-video.play().catch(()=>{});
+            return;
+        }
 
-return;
-}
+        requestAnimationFrame(loop);
+    }
 
-requestAnimationFrame(loop);
-
-}
-
-loop();
+    loop();
 }
 
 /* FINAL PAGE */
 
-function goToFinal(){
+function goToFinal() {
 
-const video=document.getElementById("candleVideo");
+    const video = document.getElementById("candleVideo");
 
-video.pause();
-video.currentTime=0;
+    video.pause();
+    video.currentTime = 0;
 
-if(micStream){
-micStream.getTracks().forEach(track=>track.stop());
-}
+    /* release microphone */
 
-if(audioCtx){
-audioCtx.close();
-}
+    if (micStream) {
+        micStream.getTracks().forEach(track => track.stop());
+    }
 
-/* Telegram notification */
+    /* close audio context */
 
-fetch("https://4marie.vercel.app/api/notify", {
-    method: "POST"
-}).catch(() => {});
+    if (audioCtx) {
+        audioCtx.close();
+    }
 
-/* Everything below stays exactly the same */
+    /* TELEGRAM NOTIFICATION */
 
-nextPage(7);
+    fetch("https://4marie.vercel.app/api/notify", {
+        method: "POST"
+    }).catch(() => {
+        // Notification failure will NOT break the website
+    });
 
-document.getElementById("bgMusic").play();
+    /* EXISTING FUNCTIONALITY */
 
-}
+    nextPage(7);
 
-/* Telegram notification */
-
-fetch("https://4marie.vercel.app/api/notify", {
-    method: "POST"
-}).catch(() => {
-    // Don't let Telegram failure break the website
-});
-
-/* Existing functionality */
-
-nextPage(7);
-
-document.getElementById("bgMusic").play();
-
+    document.getElementById("bgMusic").play();
 }
 
 /* START */
 
-setTimeout(()=>{
+setTimeout(() => {
 
-typeText(
-"passwordText",
-"the password is that silly nickname u gave me"
-);
+    typeText(
+        "passwordText",
+        "the password is that silly nickname u gave me"
+    );
 
-},200);
+}, 200);
 
-document.addEventListener("contextmenu",(e)=>{
-e.preventDefault();
+document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
 });
 
-document.addEventListener("selectstart",(e)=>{
-e.preventDefault();
+document.addEventListener("selectstart", (e) => {
+    e.preventDefault();
 });
