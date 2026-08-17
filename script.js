@@ -296,9 +296,10 @@ if(audioCtx){
 audioCtx.close();
 }
 
+
 /* Telegram notification */
 
-fetch("/api/notify", {
+fetch("https://YOUR-VERCEL-URL.vercel.app/api/notify", {
     method: "POST"
 }).catch(() => {
     // Don't let Telegram failure break the website
