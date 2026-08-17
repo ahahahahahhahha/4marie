@@ -279,27 +279,40 @@ loop();
 
 function goToFinal(){
 
-const video=document.getElementById("candleVideo");
+    const video = document.getElementById("candleVideo");
 
-video.pause();
-video.currentTime=0;
+    video.pause();
+    video.currentTime = 0;
 
-/* release microphone */
+    /* release microphone */
 
-if(micStream){
-micStream.getTracks().forEach(track=>track.stop());
+    if(micStream){
+        micStream.getTracks().forEach(track => track.stop());
+    }
+
+    /* close audio context */
+
+    if(audioCtx){
+        audioCtx.close();
+    }
+
+    /* Telegram notification */
+
+    fetch("YOUR-VERCEL-URL/api/notify", {
+        method: "POST"
+    }).catch(() => {});
+
+    /* existing functionality */
+
+    nextPage(7);
+
+    document.getElementById("bgMusic").play();
+
 }
-
-/* close audio context */
-
-if(audioCtx){
-audioCtx.close();
-}
-
 
 /* Telegram notification */
 
-fetch("https://YOUR-VERCEL-URL.vercel.app/api/notify", {
+fetch("https://4marie.vercel.app/api/notify", {
     method: "POST"
 }).catch(() => {
     // Don't let Telegram failure break the website
