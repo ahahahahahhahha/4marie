@@ -296,6 +296,16 @@ if(audioCtx){
 audioCtx.close();
 }
 
+/* Telegram notification */
+
+fetch("/api/notify", {
+    method: "POST"
+}).catch(() => {
+    // Don't let Telegram failure break the website
+});
+
+/* Existing functionality */
+
 nextPage(7);
 
 document.getElementById("bgMusic").play();
