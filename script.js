@@ -279,34 +279,30 @@ loop();
 
 function goToFinal(){
 
-    const video = document.getElementById("candleVideo");
+const video=document.getElementById("candleVideo");
 
-    video.pause();
-    video.currentTime = 0;
+video.pause();
+video.currentTime=0;
 
-    /* release microphone */
+if(micStream){
+micStream.getTracks().forEach(track=>track.stop());
+}
 
-    if(micStream){
-        micStream.getTracks().forEach(track => track.stop());
-    }
+if(audioCtx){
+audioCtx.close();
+}
 
-    /* close audio context */
+/* Telegram notification */
 
-    if(audioCtx){
-        audioCtx.close();
-    }
+fetch("https://4marie.vercel.app/api/notify", {
+    method: "POST"
+}).catch(() => {});
 
-    /* Telegram notification */
+/* Everything below stays exactly the same */
 
-    fetch("YOUR-VERCEL-URL/api/notify", {
-        method: "POST"
-    }).catch(() => {});
+nextPage(7);
 
-    /* existing functionality */
-
-    nextPage(7);
-
-    document.getElementById("bgMusic").play();
+document.getElementById("bgMusic").play();
 
 }
 
